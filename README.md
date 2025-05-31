@@ -1,117 +1,113 @@
-# 💰 Stellar-Soroban Fonlama DApp
+# 💰 Stellar-Soroban Funding DApp
 
-Bu proje, **Stellar ve Soroban** kullanarak oluşturulmuş bir startup fonlama dApp'idir. Yatırımcılar beğendikleri startup şirketlere yatırım yapabilir ve hedef fonlamaya ulaşıldığında hisse oranında geri dönüş alabilirler.
+This project is a startup funding dApp built using **Stellar and Soroban**. Investors can invest in their favorite startup companies and receive returns proportional to their share when the funding target is reached.
 
-## 🚀 Özellikler
+## 🚀 Features
 
-- 🌐 **Next.js** tabanlı modern frontend
-- 📜 **Rust / Soroban** akıllı sözleşmeleri
-- 🔑 **Freighter cüzdan** bağlantısı
-- 💼 Startup şirket listesi ve detay görüntüleme
-- 💰 Güvenli yatırım yapma sistemi
-- 📊 Gerçek zamanlı fonlama ilerleme takibi
-- ✅ Hedef fonlamaya ulaşma durumu kontrolü
-- 🎨 Şık ve sezgisel kullanıcı arayüzü (Tailwind CSS ile)
+* 🌐 **Next.js** based modern frontend
+* 📜 **Rust / Soroban** smart contracts
+* 🔑 **Freighter wallet** integration
+* 💼 Startup company listing and detail viewing
+* 💰 Secure investment system
+* 📊 Real-time funding progress tracking
+* ✅ Funding target achievement status monitoring
+* 🎨 Elegant and intuitive user interface (with Tailwind CSS)
 
-## 📂 Proje Yapısı
+## 📂 Project Structure
 
 ```bash
-/contract             # Rust/Soroban akıllı sözleşme kodları
-/app                  # Next.js uygulaması
-  ├── /components     # React bileşenleri
-  ├── /pages          # Sayfa bileşenleri
-  └── /styles         # CSS dosyaları
-/tailwind.config.js   # Tailwind yapılandırması
-/README.md            # Bu döküman!
+/contract             # Rust/Soroban smart contract code
+/app                  # Next.js application
+  ├── /components     # React components
+  ├── /pages          # Page components
+  └── /styles         # CSS files
+/tailwind.config.js   # Tailwind configuration
+/README.md            # This document!
 ```
 
-## 🛠️ Kurulum
+## 🛠️ Installation
 
-1️⃣ **Repoyu klonlayın:**
+### 1️⃣ **Clone the repository:**
+
 ```bash
-git clone https://github.com/<kullanici_adi>/stellar-funding-dapp.git
+git clone https://github.com/<username>/stellar-funding-dapp.git
 cd stellar-funding-dapp
 ```
 
-2️⃣ **Bağımlılıkları yükleyin:**
+### 2️⃣ **Install dependencies:**
+
 ```bash
 npm install
 ```
 
-3️⃣ **Geliştirme sunucusunu başlatın:**
+### 3️⃣ **Start the development server:**
+
 ```bash
 npm run dev
 ```
 
-4️⃣ **Akıllı sözleşmeyi build etmek için:**
+### 4️⃣ **To build the smart contract:**
+
 ```bash
 cd contract
 cargo build --target wasm32-unknown-unknown --release
 soroban contract deploy --wasm target/wasm32-unknown-unknown/release/funding_contract.wasm --source alice --network testnet
 ```
 
-## ⚙️ Kullanım
+## ⚙️ Usage
 
-- Ana sayfada cüzdanınızı bağlayın (Freighter Wallet gerekli)
-- Startup şirketleri listesini görüntüleyin
-- Beğendiğiniz şirkete tıklayarak detaylarını inceleyin
-- Yatırım yapmak istediğiniz miktarı girin ve onaylayın
-- Fonlama hedefine ulaşıldığında bilgilendirme mesajı alın
+* Connect your wallet on the homepage (Freighter Wallet required)
+* View the list of startup companies
+* Click on your preferred company to view details
+* Enter the amount you want to invest and confirm
+* Receive notification when funding target is reached
 
-## 💡 Nasıl Çalışır?
+## 💡 How It Works?
 
-1. **Şirket Kaydı**: Startup'lar platformda kendilerini tanıtır ve hedef fonlama miktarını belirler
-2. **Yatırım**: Kullanıcılar XLM ile şirketlere yatırım yapar
-3. **Takip**: Gerçek zamanlı olarak fonlama ilerlemesi takip edilir
-4. **Başarı**: Hedef tutara ulaşıldığında fonlama tamamlanır
-5. **Hisse Dağılımı**: Yatırım oranında hisse hakları bilgilendirmesi yapılır
+1. **Company Registration**: Startups introduce themselves on the platform and set their funding target
+2. **Investment**: Users invest in companies using XLM
+3. **Tracking**: Funding progress is tracked in real-time
+4. **Success**: Funding is completed when the target amount is reached
+5. **Share Distribution**: Share rights information is provided proportional to investment
 
-## 🔧 Teknoloji Yığını
+## 🔧 Technology Stack
 
-- **Frontend**: Next.js 13+, React, TypeScript
-- **Styling**: Tailwind CSS
-- **Blockchain**: Stellar Network, Soroban Smart Contracts
-- **Language**: Rust (Smart Contract), JavaScript/TypeScript (Frontend)
-- **Wallet**: Freighter Wallet Integration
+* **Frontend**: Next.js 13+, React, TypeScript
+* **Styling**: Tailwind CSS
+* **Blockchain**: Stellar Network, Soroban Smart Contracts
+* **Language**: Rust (Smart Contract), JavaScript/TypeScript (Frontend)
+* **Wallet**: Freighter Wallet Integration
 
-## 📸 Ekran Görüntüleri
+## 📸 Screenshots
 
-![Ana Sayfa](./screenshots/homepage.png)
-![Şirket Detayı](./screenshots/company-detail.png)
-![Yatırım Sayfası](./screenshots/investment.png)
+[Screenshots will be added here]
 
-## 🌐 Canlı Demo
+## 🌐 Live Demo
 
-[Demo Linki](https://stellar-funding-dapp.vercel.app) (Yakında!)
+[Demo Link (Coming Soon!)]
 
-## 📄 Lisans
+## 📄 License
 
-Bu proje [MIT Lisansı](LICENSE) ile lisanslanmıştır.
+This project is licensed under the MIT License.
 
----
+## ✨ **Want to contribute?**
 
-✨ **Katkıda bulunmak isterseniz:**  
-- PR'larınızı bekliyoruz!  
-- Yeni özellik önerileri ve hata bildirimleri açabilirsiniz.
+* We welcome your PRs!
+* You can open new feature suggestions and bug reports.
 
----
+## 🔗 **Links:**
 
-🔗 **Bağlantılar:**
-- 🌐 [Stellar Developer Docs](https://developers.stellar.org/docs/)
-- 🔧 [Soroban Dökümantasyon](https://soroban.stellar.org/docs)
-- 💼 [Freighter Wallet](https://freighter.app/)
-- 🎯 [Stellar Testnet](https://testnet.steexp.com/)
+* 🌐 [Stellar Developer Docs](https://developers.stellar.org/)
+* 🔧 [Soroban Documentation](https://soroban.stellar.org/)
+* 💼 [Freighter Wallet](https://www.freighter.app/)
+* 🎯 [Stellar Testnet](https://laboratory.stellar.org/)
 
----
+**Note:** Make sure to complete the Soroban smart contract compilation in the `contract` folder before running the project! You'll also need testnet XLM.
 
-> **Not:** Projeyi çalıştırmadan önce `contract` klasöründe Soroban smart contract derlemesini tamamladığınızdan emin olun! Ayrıca testnet XLM'e ihtiyacınız olacak.
+## 🚨 Important Warnings
 
-## 🚨 Önemli Uyarılar
+* This project is for educational and testing purposes only
+* Evaluate risks before making real money investments
+* Works on testnet, additional security measures required for mainnet usage
 
-- Bu proje sadece eğitim ve test amaçlıdır
-- Gerçek para yatırımı yapmadan önce riskleri değerlendirin
-- Testnet üzerinde çalışır, mainnet kullanımı için ek güvenlik önlemleri alın
-
----
-
-**Geliştirici**: [İsminiz] | **İletişim**: [email@domain.com]
+**Developer**: [Your Name] | **Contact**: [email@domain.com]
