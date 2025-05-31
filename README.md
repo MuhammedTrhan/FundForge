@@ -82,10 +82,6 @@ soroban contract deploy --wasm target/wasm32-unknown-unknown/release/funding_con
 
 [Screenshots will be added here]
 
-## 🌐 Live Demo
-
-[Demo Link (Coming Soon!)]
-
 ## 📄 License
 
 This project is licensed under the MIT License.
@@ -110,4 +106,4 @@ This project is licensed under the MIT License.
 * Evaluate risks before making real money investments
 * Works on testnet, additional security measures required for mainnet usage
 
-**Developer**: [Your Name] | **Contact**: [email@domain.com]
+**Developer**: Muhammed Turhan | **Contact**: meheme4434@gmail.com
