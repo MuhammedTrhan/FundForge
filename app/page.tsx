@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import freighterApi from "@stellar/freighter-api";
-import CompanyCard from "../components/CompanyCard";
-import WalletConnection from "../components/WalletConnection";
+import CompanyCard from "./components/CompanyCard";
+import WalletConnection from "./components/WalletConnection";
 
 interface Company {
   id: string;
@@ -65,7 +65,7 @@ export default function HomePage() {
 
     setCompanies(mockCompanies);
     checkWallet();
-  }, []);
+  }, []); // mockCompanies dependency'sini kaldırdık
 
   const filteredCompanies = selectedCategory === "all"
     ? companies
@@ -89,8 +89,8 @@ export default function HomePage() {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h2 className="text-5xl font-bold text-white mb-6">
-            Geleceğin Startup'larına
-            <span className="text-purple-400"> Yatırım Yapın</span>
+            Geleceğin Startup&apos;larına{" "}
+            <span className="text-purple-400">Yatırım Yapın</span>
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Stellar blockchain üzerinde güvenli ve şeffaf fonlama platformu.
