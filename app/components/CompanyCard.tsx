@@ -1,6 +1,4 @@
-"use client";
-import React, { useState } from "react";
-import InvestmentModal from "../InvestmentModal";
+import React from 'react';
 
 interface Company {
     id: string;
@@ -18,134 +16,173 @@ interface CompanyCardProps {
 }
 
 export default function CompanyCard({ company, isWalletConnected }: CompanyCardProps) {
-    const [showModal, setShowModal] = useState(false);
-
     const progressPercentage = (company.currentAmount / company.targetAmount) * 100;
     const remainingAmount = company.targetAmount - company.currentAmount;
-    const isCompleted = progressPercentage >= 100;
 
-    const formatAmount = (amount: number) => {
+    const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat('tr-TR', {
             style: 'currency',
             currency: 'USD',
-            minimumFractionDigits: 0
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
         }).format(amount);
     };
 
-    const handleInvestClick = () => {
-        if (!isWalletConnected) {
-            alert("Yatırım yapmak için önce cüzdanınızı bağlamanız gerekiyor.");
-            return;
+    const getCategoryIcon = (category: string) => {
+        switch (category) {
+            case 'teknoloji':
+                return '⚡';
+            case 'saglik':
+                return '🏥';
+            case 'blockchain':
+                return '🔗';
+            default:
+                return '🚀';
         }
-        if (isCompleted) {
-            alert("Bu proje hedef fonlamaya ulaştı. Yeni yatırım kabul edilmiyor.");
-            return;
+    };
+
+    const getCategoryColor = (category: string) => {
+        switch (category) {
+            case 'teknoloji':
+                return 'from-blue-500 to-cyan-500';
+            case 'saglik':
+                return 'from-green-500 to-emerald-500';
+            case 'blockchain':
+                return 'from-purple-500 to-pink-500';
+            default:
+                return 'from-gray-500 to-slate-500';
         }
-        setShowModal(true);
     };
 
     return (
-        <>
-            <div className="bg-black/20 backdrop-blur-sm rounded-2xl overflow-hidden border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20">
-                {/* Company Image */}
-                <div className="relative h-48 bg-gradient-to-br from-purple-600 to-blue-600">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <h3 className="text-2xl font-bold text-white">{company.name}</h3>
-                    </div>
-                    {isCompleted && (
-                        <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                            Tamamlandı
-                        </div>
-                    )}
+        <div className="group relative">
+            {/* Glow effect */}
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl blur opacity-0 group-hover:opacity-30 transition duration-1000 group-hover:duration-200"></div>
+
+            {/* Main card */}
+            <div className="relative bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-xl rounded-2xl p-6 border border-gray-700/30 hover:border-gray-600/50 transition-all duration-300 group-hover:transform group-hover:scale-[1.02] shadow-xl">
+                {/* Category badge */}
+                <div className="absolute top-4 right-4 z-10">
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${getCategoryColor(company.category)} text-white shadow-lg`}>
+                        <span className="mr-1">{getCategoryIcon(company.category)}</span>
+                        {company.category === 'teknoloji' ? 'Teknoloji' :
+                            company.category === 'saglik' ? 'Sağlık' :
+                                company.category === 'blockchain' ? 'Blockchain' : company.category}
+                    </span>
                 </div>
 
-                <div className="p-6">
-                    {/* Company Info */}
-                    <h3 className="text-xl font-bold text-white mb-2">{company.name}</h3>
-                    <p className="text-gray-300 text-sm mb-4 line-clamp-2">{company.description}</p>
-
-                    {/* Category Badge */}
-                    <div className="mb-4">
-                        <span className="bg-purple-600/20 text-purple-300 px-3 py-1 rounded-full text-xs font-medium border border-purple-500/30">
-                            {company.category === "teknoloji" ? "Teknoloji" :
-                                company.category === "saglik" ? "Sağlık" : "Blockchain"}
-                        </span>
+                {/* Company image */}
+                <div className="relative mb-6 overflow-hidden rounded-xl">
+                    <div className="aspect-video bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+                        <div className="text-6xl opacity-50">
+                            {getCategoryIcon(company.category)}
+                        </div>
                     </div>
 
-                    {/* Progress Section */}
-                    <div className="mb-6">
-                        <div className="flex justify-between items-center mb-2">
-                            <span className="text-gray-300 text-sm">İlerleme</span>
-                            <span className="text-white font-semibold">{Math.round(progressPercentage)}%</span>
-                        </div>
+                    {/* Overlay gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
 
-                        {/* Progress Bar */}
-                        <div className="w-full bg-gray-700 rounded-full h-2 mb-3">
-                            <div
-                                className={`h-2 rounded-full transition-all duration-500 ${isCompleted ? 'bg-green-500' : 'bg-gradient-to-r from-purple-500 to-blue-500'
-                                    }`}
-                                style={{ width: `${Math.min(progressPercentage, 100)}%` }}
-                            ></div>
-                        </div>
-
-                        {/* Amount Info */}
-                        <div className="flex justify-between items-center text-sm">
-                            <div>
-                                <span className="text-gray-400">Toplanan: </span>
-                                <span className="text-white font-semibold">{formatAmount(company.currentAmount)}</span>
+                    {/* Progress indicator overlay */}
+                    <div className="absolute bottom-2 left-2 right-2">
+                        <div className="bg-black/50 backdrop-blur-sm rounded-lg p-2">
+                            <div className="flex justify-between items-center text-xs text-white mb-1">
+                                <span className="font-medium">İlerleme</span>
+                                <span className="font-bold">{Math.round(progressPercentage)}%</span>
                             </div>
-                            <div>
-                                <span className="text-gray-400">Hedef: </span>
-                                <span className="text-white font-semibold">{formatAmount(company.targetAmount)}</span>
+                            <div className="w-full bg-gray-700 rounded-full h-1.5">
+                                <div
+                                    className="bg-gradient-to-r from-purple-500 to-blue-500 h-1.5 rounded-full transition-all duration-1000 ease-out"
+                                    style={{ width: `${Math.min(progressPercentage, 100)}%` }}
+                                ></div>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        {!isCompleted && (
-                            <div className="mt-2">
-                                <span className="text-purple-300 text-sm">
-                                    Kalan: {formatAmount(remainingAmount)}
+                {/* Company info */}
+                <div className="space-y-4">
+                    <div>
+                        <h3 className="text-xl font-bold text-white mb-2 line-clamp-1 group-hover:text-purple-300 transition-colors">
+                            {company.name}
+                        </h3>
+                        <p className="text-gray-400 text-sm line-clamp-2 leading-relaxed">
+                            {company.description}
+                        </p>
+                    </div>
+
+                    {/* Funding stats */}
+                    <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                            <div className="text-center">
+                                <p className="text-2xl font-bold text-green-400">
+                                    {formatCurrency(company.currentAmount)}
+                                </p>
+                                <p className="text-xs text-gray-500 uppercase tracking-wide">Toplanan</p>
+                            </div>
+                            <div className="text-center">
+                                <p className="text-2xl font-bold text-blue-400">
+                                    {formatCurrency(company.targetAmount)}
+                                </p>
+                                <p className="text-xs text-gray-500 uppercase tracking-wide">Hedef</p>
+                            </div>
+                            <div className="text-center">
+                                <p className="text-2xl font-bold text-purple-400">
+                                    {formatCurrency(remainingAmount)}
+                                </p>
+                                <p className="text-xs text-gray-500 uppercase tracking-wide">Kalan</p>
+                            </div>
+                        </div>
+
+                        {/* Progress bar */}
+                        <div className="space-y-2">
+                            <div className="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
+                                <div
+                                    className="bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 h-2 rounded-full transition-all duration-1000 ease-out relative"
+                                    style={{ width: `${Math.min(progressPercentage, 100)}%` }}
+                                >
+                                    {/* Shimmer effect */}
+                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                </div>
+                            </div>
+                            <div className="flex justify-between text-xs text-gray-500">
+                                <span>{Math.round(progressPercentage)}% tamamlandı</span>
+                                <span>{Math.round(100 - progressPercentage)}% kaldı</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Action button */}
+                    <div className="pt-2">
+                        {isWalletConnected ? (
+                            <button className="w-full btn-primary group/btn">
+                                <span className="flex items-center justify-center gap-2">
+                                    <span>Yatırım Yap</span>
+                                    <svg
+                                        className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                    </svg>
                                 </span>
-                            </div>
+                            </button>
+                        ) : (
+                            <button className="w-full btn-secondary opacity-50 cursor-not-allowed">
+                                <span className="flex items-center justify-center gap-2">
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                    </svg>
+                                    <span>Cüzdan Bağlayın</span>
+                                </span>
+                            </button>
                         )}
                     </div>
-
-                    {/* Investment Button */}
-                    <button
-                        onClick={handleInvestClick}
-                        disabled={isCompleted}
-                        className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 ${isCompleted
-                            ? "bg-gray-600 text-gray-400 cursor-not-allowed"
-                            : isWalletConnected
-                                ? "bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white shadow-lg hover:shadow-xl"
-                                : "bg-gray-700 hover:bg-gray-600 text-gray-300"
-                            }`}
-                    >
-                        {isCompleted
-                            ? "Fonlama Tamamlandı"
-                            : isWalletConnected
-                                ? "Yatırım Yap"
-                                : "Cüzdan Bağla"
-                        }
-                    </button>
-
-                    {isCompleted && (
-                        <div className="mt-3 p-3 bg-blue-600/20 border border-blue-500/30 rounded-lg">
-                            <p className="text-blue-300 text-xs">
-                                ✅ Bu proje hedef fonlamaya ulaştı! Yatırımcılara hisse dağıtımı yakında başlayacak.
-                            </p>
-                        </div>
-                    )}
                 </div>
-            </div>
 
-            {/* Investment Modal */}
-            {showModal && (
-                <InvestmentModal
-                    company={company}
-                    onClose={() => setShowModal(false)}
-                    remainingAmount={remainingAmount}
-                />
-            )}
-        </>
+                {/* Hover effects */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-600/5 to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+            </div>
+        </div>
     );
 }
